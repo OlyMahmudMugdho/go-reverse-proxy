@@ -8,7 +8,10 @@ import (
 
 func main() {
 	mux := http.NewServeMux()
+
 	mux.HandleFunc("GET /", Status)
+	mux.HandleFunc("GET /ping", Ping)
+
 	log.Printf("server is running on port %v", 8080)
 
 	err := http.ListenAndServe(":8080", mux)
@@ -24,4 +27,8 @@ func Status(w http.ResponseWriter, r *http.Request) {
 		"ok":      true,
 		"message": "server is running",
 	})
+}
+
+func Ping(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("pong"))
 }
